@@ -43,10 +43,10 @@ var upload = multer({ storage: storage })
 app.post("/upload",upload.single("file"),(req, res) => {
     const tempPath = req.file.originalname;
     const targetPath = path.join(__dirname, "./uploads");
+	
 
-
-console.log(req.file);
-
+console.log(req.file.path);
+console.log(storage.getFilename());
     if (path.extname(req.file.originalname).toLowerCase() === ".jpeg") {
       fs.rename(tempPath, targetPath, err => {
         if (err) return handleError(err, res);
