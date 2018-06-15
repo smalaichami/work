@@ -27,10 +27,17 @@ const handleError = (err, res) => {
     .end("Oops! Something went wrong!");
 };
 
-const upload = multer({
-  dest: "/path/uploaded/files"
-});
 
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, '/data/uploads')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname )
+  }
+})
+
+var upload = multer({ storage: storage })
 
 
 app.post("/upload",upload.single("file"),(req, res) => {
